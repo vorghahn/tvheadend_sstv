@@ -10,7 +10,7 @@ python3 /usr/bin/tvh_sstv.py
 
 then
   wget -q http://sstv.fog.pt/feed5.xml -O /home/hts/.xmltv/feed5.xml
-  #cat /home/hts/.xmltv/feed5.xml
+  cat /home/hts/.xmltv/feed5.xml
   exit 0
 fi
 
