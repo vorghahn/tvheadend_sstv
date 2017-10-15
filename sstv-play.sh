@@ -27,6 +27,6 @@ else
 	QUALITY=1
 fi
 
-URL=http://"$SERVER".smoothstreams.tv:9100/"$SITE"/ch"$CHANNEL"q"$QUALITY".stream/playlist.m3u8?wmsAuthSign="$TOKEN"==
+URL=https://"$SERVER".smoothstreams.tv:443/"$SITE"/ch"$CHANNEL"q"$QUALITY".stream/playlist.m3u8?wmsAuthSign="$TOKEN"==
 
 ffmpeg -i $URL -codec copy -loglevel error -f mpegts pipe:1
