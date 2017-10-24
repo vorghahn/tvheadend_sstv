@@ -6,9 +6,9 @@ if (( $# < 1 ))
 
 #Save this into /usr/bin ensure HTS user has read/write and the file is executable
 
-python3 /usr/bin/tvh_sstv.py
 
 then
+  python3 /usr/bin/tvh_sstv.py
   wget -q http://sstv.fog.pt/feed5.xml -O /home/hts/.xmltv/feed5.xml
   cat /home/hts/.xmltv/feed5.xml
   exit 0
