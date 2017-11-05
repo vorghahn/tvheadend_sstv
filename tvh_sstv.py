@@ -26,7 +26,7 @@ def main():
 	script = "pipe:///path/to/file/sstv-play.sh" #change this
 	print('Generating playlist')
 
-	jsonGuide1 = getJSON("http://sstv.fog.pt/channels.json")
+	jsonGuide1 = getJSON("https://sstv.fog.pt/epg/channels.json")
 	generatePlaylists(jsonGuide1, script, m3u8)
 
 def getJSON(sURL):
