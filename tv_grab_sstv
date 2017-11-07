@@ -1,61 +1,40 @@
-#!/bin/bash
+#!/bin/sh
 dflag=
 vflag=
 cflag=
-if (( $# < 1 ))
 
-#Save this into /usr/bin ensure HTS user has read/write and the file is executable
+#Save this file into /usr/bin ensure HTS user has read/write and the file is executable
 
+URL="http://sstv.fog.pt/epg/xmltv5.xml"
+DESCRIPTION="SmoothStreamsTV"
+VERSION="1.1"
 
-then
-  python3 /usr/bin/tvh_sstv.py
-  wget -q http://sstv.fog.pt/feed5.xml -O /home/hts/.xmltv/feed5.xml
-  cat /home/hts/.xmltv/feed5.xml
-  exit 0
+if [ $# -lt 1 ]; then
+    python3 /usr/bin/tvh_sstv.py
+    >&2 echo "Downloading $URL..."
+    wget -qO - "$URL.gz" | gzip -q -d 2>/dev/null ||
+        wget -qO - "$URL" ||
+            curl -s -L "$URL.gz" | gzip -q -d 2>/dev/null ||
+                curl -s -L "$URL" ||
+                    >&2 echo "ERROR: Failed to fetch data"
+    exit 0
 fi
 
-for arg
-do
-    delim=""
-    case "$arg" in
-    #translate --gnu-long-options to -g (short options)
-       --description) args="${args}-d ";;
-       --version) args="${args}-v ";;
-       --capabilities) args="${args}-c ";;
-       #pass through anything else
-       *) [[ "${arg:0:1}" == "-" ]] || delim="\""
-           args="${args}${delim}${arg}${delim} ";;
-    esac
+for a in "$@"; do
+  [ "$a" = "-d" -o "$a" = "--description"  ] && dflag=1
+  [ "$a" = "-v" -o "$a" = "--version"      ] && vflag=1
+  [ "$a" = "-c" -o "$a" = "--capabilities" ] && cflag=1
 done
 
-#Reset the positional parameters to the short options
-eval set -- $args
-
-while getopts "dvc" option 
-do
-    case $option in
-        d)  dflag=1;;
-        v)  vflag=1;;
-        c)  cflag=1;;
-        \?) printf "unknown option: -%s\n" $OPTARG
-            printf "Usage: %s: [--description] [--version] [--capabilities] \n" $(basename $0)
-            exit 2
-            ;;
-    esac >&2
-done
-
-if [ "$dflag" ]
-then
-   printf "SmoothStreamsTV\n"
-fi
-if [ "$vflag" ]
-then
-   printf "1.0\n"
-fi
-if [ "$cflag" ]
-then
-   printf "baseline\n"
+if [ -n "$dflag" ]; then
+  echo $DESCRIPTION
 fi
 
-exit 0
+if [ -n "$vflag" ]; then
+  echo $VERSION
+fi
+
+if [ -n "$cflag" ]; then
+  echo "baseline"
+fi
 
