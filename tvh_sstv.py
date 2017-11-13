@@ -42,7 +42,9 @@ def writePlaylistFile(fileName, body):
 	'''write playlist to a local file'''
 
 	# open file to write, or create file if DNE, write <body> to file and save
-
+	if not path.isfile(fileName):
+		f = open(fileName, 'w')
+		f.close
 	with open(fileName, 'w+', encoding='utf-8') as f:
 		f.write(body)
 		f.close()
