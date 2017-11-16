@@ -1,5 +1,5 @@
 #!/bin/bash
-TOKEN=$(sh /path/to/file/sstv-request-token.sh)
+TOKEN=$(sh ./sstv-request-token.sh)
 #enter SSTV Server here
 SERVER=dap
 #enter your sstv login site here
