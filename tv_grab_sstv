@@ -5,7 +5,7 @@ cflag=
 
 #Save this file into /usr/bin ensure HTS user has read/write and the file is executable
 
-URL="http://sstv.fog.pt/epg/xmltv5.xml"
+URL="https://sstv.fog.pt/epg/xmltv5.xml"
 DESCRIPTION="SmoothStreamsTV"
 VERSION="1.1"
 
